@@ -34,7 +34,7 @@
   --desc:rgba(207,246,255,.65);     /* feature descriptions */
   --h1-grad:linear-gradient(180deg,rgb(240,246,253) 8.3%,rgb(203,209,219) 25.17%,rgb(163,174,192) 42.05%,rgb(125,136,153) 58.22%,rgb(76,89,108) 75.09%,rgb(29,45,70) 91.97%);
   --glass:rgba(170,186,190,.35);
-  --art:url(assets/hero-art.webp);
+  --art:url(https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/9a8f5c8c-adf0-44f1-b3b0-d650d3a9df8d.webp);
   --gutter:clamp(20px,calc(4vw + 4px),48px);   /* stacked layouts: outer margin */
 }
 @supports (height:100dvh){:root{--vh:100dvh}}
@@ -63,13 +63,21 @@ a{color:inherit;text-decoration:none}
   min-height:100vh;min-height:100svh;width:100%;
   display:flex;flex-direction:column;align-items:center;
   padding-bottom:env(safe-area-inset-bottom);
-  background:var(--art) no-repeat,var(--navy);
-  background-size:var(--bgw) auto,auto;
-  /* centre-aligned (50%) puts the asset centre mid-screen; the sphere sits at
-     49.66% of the asset, so nudge by 0.34% of its width */
-  background-position:left calc(50% + var(--bgw) * 0.0034) bottom calc(var(--bgw) * -0.04245),0 0;
+  background:var(--navy);
+  overflow:clip;                        /* the artwork layer is cropped by the hero box */
 }
-.hero__bg{display:none}
+/* the artwork is a looping video (poster = the still), placed exactly where
+   the still background used to sit: centre-aligned, the sphere sits at 49.66%
+   of the asset, so nudge by 0.34% of its width */
+.hero__bg{
+  position:absolute;z-index:-1;pointer-events:none;
+  width:var(--bgw);aspect-ratio:4/3;
+  left:calc(50% - var(--bgw) * 0.5 + var(--bgw) * 0.0034);
+  bottom:calc(var(--bgw) * -0.04245);
+  background:var(--art) 0 0/100% 100% no-repeat;
+}
+.hero__bg video{display:block;width:100%;height:100%;object-fit:fill}
+@media (prefers-reduced-motion:reduce){.hero__bg video{display:none}}
 
 .top{
   position:relative;width:100%;
@@ -237,9 +245,7 @@ a{color:inherit;text-decoration:none}
     background:var(--navy);
   }
   .hero__bg{
-    display:block;position:absolute;z-index:-1;pointer-events:none;
-    background:var(--art) 0 0/100% 100% no-repeat;
-    width:calc(2035.4 * var(--u));height:calc(1526.4 * var(--u));
+    width:calc(2035.4 * var(--u));height:calc(1526.4 * var(--u));aspect-ratio:auto;
     left:calc(50% + (8 - 1024) * var(--u));
     bottom:calc(-86.4 * var(--u) - var(--d) * .45);
   }
@@ -306,14 +312,16 @@ a{color:inherit;text-decoration:none}
 </head>
 <body>
 <main class="hero">
-  <div class="hero__bg" aria-hidden="true"></div>
+  <div class="hero__bg" aria-hidden="true">
+    <video src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261012_092733_1909d9ce-dccd-4f13-8ce4-3a207e64f4df.mp4" poster="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/9a8f5c8c-adf0-44f1-b3b0-d650d3a9df8d.webp" autoplay muted loop playsinline preload="auto"></video>
+  </div>
 
   <section class="top" aria-labelledby="hero-title">
     <div class="avatars" role="img" aria-label="Joined by 12 people">
-      <span class="av"><img src="assets/avatar-1.jpg" alt=""></span>
-      <span class="av"><img src="assets/avatar-2.jpg" alt=""></span>
-      <span class="av"><img src="assets/avatar-3.jpg" alt=""></span>
-      <span class="av"><img src="assets/avatar-4.jpg" alt=""></span>
+      <span class="av"><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/b4c585ad-f695-4e2e-824e-0d184018c306.jpg" alt=""></span>
+      <span class="av"><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/1ebaf864-1f06-41b4-bb68-0ba8ab0e7437.jpg" alt=""></span>
+      <span class="av"><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/08f4064c-74fd-405c-8665-3f1d2d0ab0d8.jpg" alt=""></span>
+      <span class="av"><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/540cacbc-dfaa-41fe-bdb5-1dafebc59a25.jpg" alt=""></span>
       <span class="av av--more"><span>+8</span></span>
     </div>
 
